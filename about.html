@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Insights Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Additional styles for about page */
+        .about-section {
+            max-width: 800px;
+            margin: 60px auto;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .about-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .about-content p {
+            margin-bottom: 25px;
+        }
+        
+        .team-section {
+            margin: 80px 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+        }
+        
+        .team-member h3 {
+            margin-bottom: 5px;
+        }
+        
+        .team-member .role {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .team-member p {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+        }
+        
+        .stats-section {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .about-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-header p {
+                font-size: 1.1rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Insights</h1>
+                <p class="tagline">Perspectives that matter</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="create-post.html">Create Post</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-section container">
+            <div class="about-header">
+                <h1>About Insights</h1>
+                <p>Exploring ideas and sharing knowledge through thoughtful perspectives.</p>
+            </div>
+            
+            <div class="about-content">
+                <p>Insights was founded in 2023 with a simple mission: to provide a platform for thoughtful, well-crafted perspectives on topics that matter. In a world of information overload and hot takes, we believe in the power of considered analysis and nuanced thinking.</p>
+                
+                <p>Our team of writers and editors comes from diverse backgrounds, but we share a commitment to quality writing, intellectual curiosity, and respect for our readers' intelligence. We don't aim to be the loudest voice in the room—instead, we strive to be the most thoughtful.</p>
+                
+                <p>At Insights, we cover a wide range of topics from technology and science to art, culture, and beyond. What unites our coverage is an approach that values depth over superficiality, nuance over simplification, and understanding over judgment.</p>
+                
+                <p>We believe that good writing doesn't just inform—it transforms. Our hope is that the perspectives shared on Insights will challenge you to think differently, see familiar topics in a new light, and perhaps even change how you view the world around you.</p>
+            </div>
+        </section>
+        
+        <section class="team-section container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/Arjun-Avtar.png" >
+                    <h3>Arjun</h3>
+                    <div class="role">Founder & Editor-in-Chief</div>
+                    <p>ARJUN is a Founder of Insights with years of experience in technology and culture reporting.</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/Rahul.PNG" >
+                    <h3>Rahul</h3>
+                    <div class="role"> Co-Founder Senior Editor</div>
+                    <p>With a background in literature and philosophy,Rahul brings depth and perspective to our editorial process.</p>
+                </div>
+                
+            </div>
+        </section>
+        
+        <section class="stats-section">
+            <div class="container">
+                <h2 class="section-title">Insights by the Numbers</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Articles Published</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Content Categories</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-number">25k+</div>
+                        <div class="stat-label">Monthly Readers</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Contributing Writers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="container about-content" style="max-width: 800px; margin: 60px auto;">
+            <h2 class="section-title">Our Approach</h2>
+            <p>At Insights, we believe that quality content stands out in a landscape often dominated by clickbait and shallow analysis. Our editorial process is designed to ensure that every piece we publish meets our standards for depth, accuracy, and originality.</p>
+            
+            <p>We work closely with our writers to develop ideas, refine arguments, and craft narratives that resonate with readers. While we value expertise, we don't believe that specialized knowledge should be inaccessible—one of our core strengths is making complex topics approachable without oversimplification.</p>
+            
+            <p>Our commitment to our readers extends beyond just the content we publish. We view Insights as a community of curious minds, and we're always looking for ways to foster dialogue and engagement. We believe that the best ideas emerge from conversation, not monologue.</p>
+            
+            <p>As we continue to grow, we remain committed to our founding principles: thoughtful analysis, diverse perspectives, and respect for our readers. We're grateful for your interest in Insights, and we look forward to continuing this journey of exploration and discovery together.</p>
+        </section>
+    </main>
+
+    <!-- <div class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter to receive the latest posts directly in your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>About Insights</h3>
+                    <p>A platform dedicated to sharing thoughtful perspectives on a wide range of topics, from art and technology to travel and science.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Insights. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 

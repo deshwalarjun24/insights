@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post - Insights Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Additional styles specific to the create post page */
+        .post-form-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 250px;
+            resize: vertical;
+        }
+        
+        .custom-file-upload {
+            display: inline-block;
+            padding: 12px 15px;
+            cursor: pointer;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        .file-name {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .preview-post {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 1px solid var(--medium-gray);
+        }
+        
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 4px;
+            background-color: #4a5568;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.success {
+            background-color: #48bb78;
+        }
+        
+        .notification.error {
+            background-color: #f56565;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Insights</h1>
+                <p class="tagline">Perspectives that matter</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="create-post.html" class="active">Create Post</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="post-form-container">
+            <h2 class="section-title">Create New Post</h2>
+            <p>Share your thoughts, ideas, and discoveries with our community.</p>
+            
+            <form id="create-post-form" onsubmit="return submitNewPost(this)">
+                <div class="form-group">
+                    <label for="post-title">Post Title*</label>
+                    <input type="text" id="post-title" class="form-control" placeholder="Enter a captivating title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-category">Category*</label>
+                    <select id="post-category" class="form-control" required>
+                        <option value="">Select a category</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Food">Food</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Science">Science</option>
+                        <option value="Art">Art</option>
+                        <option value="Literature">Literature</option>
+                        <option value="Health">Health</option>
+                        <option value="Business">Business</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-image">Featured Image</label>
+                    <input type="file" id="post-image" accept="image/*" style="display: none;">
+                    <label for="post-image" class="custom-file-upload">
+                        <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                    </label>
+                    <div id="file-name" class="file-name">No file chosen</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-content">Content*</label>
+                    <textarea id="post-content" class="form-control" placeholder="Write your post content here..." required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn preview-post" onclick="previewPost()">Preview</button>
+                    <button type="submit" class="btn">Publish Post</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>About Insights</h3>
+                    <p>A platform dedicated to sharing thoughtful perspectives on a wide range of topics, from art and technology to travel and science.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Insights. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Handle file input display
+        document.getElementById('post-image').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+        });
+        
+        // Preview post function (for demonstration)
+        function previewPost() {
+            const title = document.getElementById('post-title').value.trim();
+            const content = document.getElementById('post-content').value.trim();
+            const category = document.getElementById('post-category').value;
+            
+            if (!title || !content || !category) {
+                showNotification('Please fill in all required fields to preview', 'error');
+                return;
+            }
+            
+            // In a real application, you would open a modal or redirect to a preview page
+            alert('Preview feature coming soon!\n\nTitle: ' + title + '\nCategory: ' + category + '\n\nContent preview: ' + content.substring(0, 150) + '...');
+        }
+    </script>
+</body>
+</html> 
