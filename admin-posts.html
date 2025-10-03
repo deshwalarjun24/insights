@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Posts - Insights Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .posts-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .posts-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .posts-table th {
+            background: #6B73FF;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .posts-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .posts-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .post-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-published {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #6B73FF;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 4px;
+            background-color: #4a5568;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.success {
+            background-color: #48bb78;
+        }
+
+        .notification.error {
+            background-color: #f56565;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .confirm-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-dialog.show {
+            display: flex;
+        }
+
+        .confirm-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Insights</h1>
+                <p class="tagline">Admin Panel</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="create-post.html">Create Post</a></li>
+                    <li><a href="admin-posts.html" class="active">Manage Posts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="admin-container">
+            <div class="admin-header">
+                <div>
+                    <h2 class="section-title">Manage Posts</h2>
+                    <p>View, edit, and delete your blog posts</p>
+                </div>
+                <a href="create-post.html" class="btn">
+                    <i class="fas fa-plus"></i> Create New Post
+                </a>
+            </div>
+
+            <div class="posts-table">
+                <div id="loading" class="loading">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading posts...</p>
+                </div>
+
+                <div id="posts-container" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Post</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Views</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="posts-tbody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="no-posts" class="no-posts" style="display: none;">
+                    <i class="fas fa-inbox fa-3x" style="color: #ddd; margin-bottom: 20px;"></i>
+                    <p>No posts found. Create your first post!</p>
+                    <a href="create-post.html" class="btn" style="margin-top: 20px;">Create Post</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="confirm-dialog" class="confirm-dialog">
+        <div class="confirm-content">
+            <i class="fas fa-exclamation-triangle fa-3x" style="color: #dc3545; margin-bottom: 20px;"></i>
+            <h3>Delete Post?</h3>
+            <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            <div class="confirm-buttons">
+                <button class="btn" onclick="closeConfirmDialog()">Cancel</button>
+                <button class="btn btn-delete" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>About Insights</h3>
+                    <p>A platform dedicated to sharing thoughtful perspectives.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Insights. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Your actual domain
+        const API_URL = 'https://hotblogspot.lovestoblog.com/php-backend/api';
+
+        let deletePostId = null;
+
+        // Load posts on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadPosts();
+        });
+
+        async function loadPosts() {
+            try {
+                const response = await fetch(`${API_URL}/posts.php?status=published&limit=100`);
+                const data = await response.json();
+
+                document.getElementById('loading').style.display = 'none';
+
+                if (data.success && data.posts && data.posts.length > 0) {
+                    displayPosts(data.posts);
+                    document.getElementById('posts-container').style.display = 'block';
+                } else {
+                    document.getElementById('no-posts').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                document.getElementById('loading').innerHTML = '<p style="color: red;">Failed to load posts. Please check your API connection.</p>';
+            }
+        }
+
+        function displayPosts(posts) {
+            const tbody = document.getElementById('posts-tbody');
+            tbody.innerHTML = '';
+
+            posts.forEach(post => {
+                const row = document.createElement('tr');
+                
+                const date = new Date(post.created_at);
+                const formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                row.innerHTML = `
+                    <td>
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-meta">By ${post.author} • ${post.read_time} min read</div>
+                    </td>
+                    <td>${post.category_name || 'Uncategorized'}</td>
+                    <td>
+                        <span class="status-badge status-${post.status}">${post.status}</span>
+                    </td>
+                    <td>${post.views_count}</td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-small btn-view" onclick="viewPost('${post.slug}')" title="View Post">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-small btn-delete" onclick="showDeleteConfirm(${post.id})" title="Delete Post">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function viewPost(slug) {
+            window.open(`blog-post.html?slug=${slug}`, '_blank');
+        }
+
+        function showDeleteConfirm(postId) {
+            deletePostId = postId;
+            document.getElementById('confirm-dialog').classList.add('show');
+        }
+
+        function closeConfirmDialog() {
+            document.getElementById('confirm-dialog').classList.remove('show');
+            deletePostId = null;
+        }
+
+        async function confirmDelete() {
+            if (!deletePostId) return;
+
+            try {
+                const response = await fetch(`${API_URL}/posts.php?id=${deletePostId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showNotification('Post deleted successfully!', 'success');
+                    closeConfirmDialog();
+                    
+                    // Reload posts after 1 second
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    showNotification(data.error || 'Failed to delete post', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                showNotification('An error occurred while deleting the post', 'error');
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
